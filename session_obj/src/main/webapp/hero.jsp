@@ -1,16 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="ex.Fruit" %>
+<%@ page import="model.Hero" %>
 <%
-Fruit fruit = (Fruit)session.getAttribute("fruit");
+Hero hero = (Hero) session.getAttribute("hero");
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Hero</title>
 </head>
 <body>
-  <p><%= fruit.getName() %> : <%= fruit.getPrice() %></p>
+	<p><%= hero.getName() %> : <%= hero.getHp() %></p>
 </body>
 </html>

@@ -1,6 +1,4 @@
-package ex;
-
-import java.io.IOException;
+package servlet;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -8,18 +6,19 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import model.Hero;
 
-@WebServlet("/FruitServlet")
-public class FruitServlet extends HttpServlet {
+import java.io.IOException;
+
+@WebServlet("/MainServlet")
+public class MainServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+       
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Fruit fruit = new Fruit();
-		fruit.setName("いちご");
-		fruit.setPrice(700);
+		Hero hero = new Hero("湊 雄輔", 100, 23);
 		HttpSession session = request.getSession();
-		session.setAttribute("fruit", fruit);
-		System.out.println("セッションスコープに保存しました");
+		session.setAttribute("hero", hero);
+		System.out.println("セッションに保存しました。");
 	}
 
 }
