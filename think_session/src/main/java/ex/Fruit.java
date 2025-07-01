@@ -8,17 +8,21 @@ public class Fruit implements Serializable {
 	private int price;
 	
 	public Fruit() {}
-	public String getName() {
-		return name;
-	}
-	public int getPrice() {
-		return price;
-	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public String getName() {
+		return name;
+	}
+
 	public void setPrice(int price) {
 		this.price = price;
+	}
+
+	public int getPrice() {
+		return price;
 	}
 	
 }

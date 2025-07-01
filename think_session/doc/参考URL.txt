@@ -1,0 +1,3 @@
+
+Serializableはどういう意味があるか?(serialVersionUIDは?) - My開発メモ
+http://nukblog.work/2023/12/28/serializable-serialversionuid/
