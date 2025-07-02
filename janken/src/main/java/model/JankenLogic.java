@@ -1,20 +1,9 @@
 package model;
 
 public class JankenLogic {
-	final String[] HAND = {"グー", "チョキ", "パー"};
 	
-	public String execute(int user, int com) {
-		String msg = "";
-		msg += "あなた：" + HAND[user];
-		msg += " わたし：" + HAND[com] + "<br>";
-		
-		if (user == com) {
-			msg += "あいこです";
-		} else if ((user + 1) % 3 == com) {
-			msg += "あなたの勝ちです";
-		} else {
-			msg += "わたしの勝ちです";
-		}
-		return msg;
+	public void execute(User user, Com com) {
+		user.judge(com);
+		com.judge(user);
 	}
 }

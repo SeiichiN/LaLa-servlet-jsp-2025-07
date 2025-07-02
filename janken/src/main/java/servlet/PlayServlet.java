@@ -8,8 +8,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
+import model.Com;
 import model.JankenLogic;
+import model.User;
 
 @WebServlet("/play")
 public class PlayServlet extends HttpServlet {
@@ -23,12 +24,14 @@ public class PlayServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int userHand = Integer.parseInt(request.getParameter("hand"));
-		int comHand = (int)(Math.random() * 3);
+		User user = new User(userHand);
+		Com com = new Com();
 		
 		JankenLogic jankenLogic = new JankenLogic();
-		String msg = jankenLogic.execute(userHand, comHand);
+		jankenLogic.execute(user, com);
 		
-		request.setAttribute("msg", msg);
+		request.setAttribute("user", user);
+		request.setAttribute("com", com);
 		String path = "WEB-INF/jsp/result.jsp";
 		RequestDispatcher d = request.getRequestDispatcher(path);
 		d.forward(request, response);
