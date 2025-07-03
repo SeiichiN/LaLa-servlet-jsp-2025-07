@@ -24,8 +24,10 @@ public class PlayServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int userHand = Integer.parseInt(request.getParameter("hand"));
-		User user = new User(userHand);
-		Com com = new Com();
+		User user = new User("ユーザー");
+		user.setHand(userHand);
+		Com com = new Com("コム");
+		com.setRandomHand();
 		
 		JankenLogic jankenLogic = new JankenLogic();
 		jankenLogic.execute(user, com);

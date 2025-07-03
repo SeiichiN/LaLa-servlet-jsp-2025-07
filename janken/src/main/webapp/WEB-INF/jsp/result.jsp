@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="model.User, model.Com" %>
+<%@ page import="model.User" %>
 <%
 User user = (User) request.getAttribute("user");
-Com com = (Com) request.getAttribute("com");
 %>
 <!DOCTYPE html>
 <html>
@@ -17,8 +16,6 @@ Com com = (Com) request.getAttribute("com");
 		<h1>じゃんけんゲーム</h1>
 	</header>
 	<main>
-		<p><%= user.showImg() %></p>
-		<p><%= com.showImg() %></p>
 		<p><%= user.getResult() %></p>
 		<p><a href="play">もう一度</a></p>
 	</main>
