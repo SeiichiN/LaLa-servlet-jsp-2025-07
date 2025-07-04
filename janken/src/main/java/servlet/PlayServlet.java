@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import model.Com;
-import model.JankenLogic;
+import model.GameManager;
 import model.User;
 
 @WebServlet("/play")
@@ -23,16 +23,15 @@ public class PlayServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int userHand = Integer.parseInt(request.getParameter("hand"));
-		User user = new User("ユーザー");
+		User user = new User();
 		user.setHand(userHand);
-		Com com = new Com("コム");
+		Com com = new Com();
 		com.setRandomHand();
 		
-		JankenLogic jankenLogic = new JankenLogic();
-		jankenLogic.execute(user, com);
+		GameManager manager = new GameManager();
+		manager.judge(user, com);
+		request.setAttribute("manager", manager);
 		
-		request.setAttribute("user", user);
-		request.setAttribute("com", com);
 		String path = "WEB-INF/jsp/result.jsp";
 		request.getRequestDispatcher(path).forward(request, response);
 	}
