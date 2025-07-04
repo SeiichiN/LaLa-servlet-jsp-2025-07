@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import model.Mutter;
+import model.PostMutterLogic;
 import model.User;
 
 @WebServlet("/Main")
@@ -41,5 +42,29 @@ public class Main extends HttpServlet {
 		RequestDispatcher d = request.getRequestDispatcher(path);
 		d.forward(request, response);
 	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		String text = request.getParameter("text");
+		
+		if (text != null && text.length() != 0) {
+			ServletContext application = this.getServletContext();
+			@SuppressWarnings("unchecked")
+			List<Mutter> mutterList = (List<Mutter>)application.getAttribute("mutterList");
 
-}
+			HttpSession session = request.getSession();
+			User loginUser = (User)session.getAttribute("loginUser");
+			
+			Mutter mutter = new Mutter(loginUser.getName(), text);
+			PostMutterLogic postMutterLogic = new PostMutterLogic();
+			postMutterLogic.execute(mutter, mutterList);
+			// application.setAttribute("mutterList", mutterList);
+		} else {
+			request.setAttribute("errorMsg", "つぶやきが入力されていません");
+		}
+		String path = "WEB-INF/jsp/main.jsp";
+		RequestDispatcher d = request.getRequestDispatcher(path);
+		d.forward(request, response);	
+	}
+
+} // class end
