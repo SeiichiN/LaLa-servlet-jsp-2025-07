@@ -6,7 +6,6 @@
 <body>
 	<jsp:include page="common/header.jsp" />
 	<p>「どこつぶ」は・・・</p>
-	<jsp:include page="common/aside.jsp" />
 	<jsp:include page="common/footer.jsp" />
 </body>
 </html>
