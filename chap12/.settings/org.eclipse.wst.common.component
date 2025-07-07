@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="chap12">
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+<<<<<<< HEAD:janken_a/.settings/org.eclipse.wst.common.component
+<<<<<<< HEAD
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+=======
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/"/>
+>>>>>>> main
+        <property name="context-root" value="janken_a"/>
+        <property name="java-output-path" value="/janken_a/build/classes"/>
+=======
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <property name="context-root" value="chap12"/>
+        <property name="java-output-path" value="/chap12/build/classes"/>
+>>>>>>> main:chap12/.settings/org.eclipse.wst.common.component
+    </wb-module>
+</project-modules>

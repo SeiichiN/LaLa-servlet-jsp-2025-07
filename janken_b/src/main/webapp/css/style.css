@@ -1,9 +1,0 @@
-@charset "UTF-8";
-
-img {
-	width: 100px;
-}
-button[name="userHand"] {
-	background-color: transparent;
-	border: none;
-}
