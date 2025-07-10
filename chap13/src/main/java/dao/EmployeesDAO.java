@@ -47,4 +47,78 @@ public class EmployeesDAO {
 		
 		return empList;
 	}
+
+	public List<Employee> findByAge(int _age) {
+		List<Employee> empList = new ArrayList<>();
+		
+		try {
+			Class.forName("org.h2.Driver");
+		} catch (ClassNotFoundException e) {
+			throw new IllegalStateException(
+					"JDBC読み込みエラー");
+		}
+		
+		try (Connection conn = DriverManager.getConnection(
+				JDBC_URL, DB_USER, DB_PASS)) {
+			String sql = 
+					"""
+					SELECT id, name, age FROM employees
+					WHERE age >= ?
+					""";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setInt(1, _age);
+			ResultSet rs = pStmt.executeQuery();
+			
+			while (rs.next()) {
+				String id = rs.getString("id");
+				String name = rs.getString("name");
+				int age = rs.getInt("age");
+				Employee employee = new Employee(id, name, age);
+				empList.add(employee);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		return empList;
+	}
+
+	public List<Employee> findByName(String _name) {
+		List<Employee> empList = new ArrayList<>();
+		
+		try {
+			Class.forName("org.h2.Driver");
+		} catch (ClassNotFoundException e) {
+			throw new IllegalStateException(
+					"JDBC読み込みエラー");
+		}
+		
+		try (Connection conn = DriverManager.getConnection(
+				JDBC_URL, DB_USER, DB_PASS)) {
+			String sql = 
+					"""
+					SELECT id, name, age FROM employees
+					WHERE name like ?
+					""";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, "%" + _name + "%");
+			ResultSet rs = pStmt.executeQuery();
+			
+			while (rs.next()) {
+				String id = rs.getString("id");
+				String name = rs.getString("name");
+				int age = rs.getInt("age");
+				Employee employee = new Employee(id, name, age);
+				empList.add(employee);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		return empList;
+	}
 }
