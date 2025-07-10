@@ -35,7 +35,7 @@
 				<input type="hidden" name="id" value="${emp.id}">
 				<input type="hidden" name="name" value="${emp.name}">
 				<input type="hidden" name="age" value="${emp.age}">
-				<input formaction="create" formmethod="post" type="submit" value="もどる">
+				<input formaction="createInput" formmethod="post" type="submit" value="もどる">
 				<input type="submit" value="確認">
 			</form>
 	  </main>
