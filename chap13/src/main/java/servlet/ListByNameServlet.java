@@ -11,26 +11,27 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import model.Employee;
-import model.GetListByAgeLogic;
+import model.GetListByNameLogic;
 import servlet.util.Validator;
 
-@WebServlet("/listByAge")
-public class ListByAgeServlet extends HttpServlet {
+@WebServlet("/listByName")
+public class ListByNameServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<String> errorList = new ArrayList<>();
-		String ageTxt = request.getParameter("age");
+		String name = request.getParameter("name");
 		Validator validator = new Validator();
-		int age = validator.checkAge(ageTxt, errorList);
+		validator.checkName(name, errorList);
 		
 		if (errorList.size() > 0) {
 			request.setAttribute("errorList", errorList);
 		} else {
-			GetListByAgeLogic logic = new GetListByAgeLogic();
-			List<Employee> empList = logic.execute(age);
+			GetListByNameLogic logic = new GetListByNameLogic();
+			List<Employee> empList = logic.execute(name);
 			request.setAttribute("empList", empList);
 		}
+		
 		String path = "WEB-INF/jsp/list.jsp";
 		request.getRequestDispatcher(path).forward(request, response);
 	}
