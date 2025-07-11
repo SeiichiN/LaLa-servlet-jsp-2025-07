@@ -1,8 +1,6 @@
 package servlet.create;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -11,33 +9,30 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import model.Employee;
-import servlet.util.Validator;
+import model.RegisterEmpLogic;
 
-@WebServlet("/createConfirm")
-public class CreateConfirmServlet extends HttpServlet {
+@WebServlet("/createDone")
+public class CreateDoneServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String id = request.getParameter("id");
 		String name = request.getParameter("name");
 		String ageTxt = request.getParameter("age");
-		
-		List<String> errorList = new ArrayList<>();
-		Validator validator = new Validator();
-		int age = validator.checkAge(ageTxt, errorList);
+		int age = Integer.parseInt(ageTxt);
 		Employee emp = new Employee(id, name, age);
-		validator.check(emp, errorList);
-		String path = "";
-		if (errorList.size() > 0) {
-			// エラーがある場合は、入力画面にもどる
-			request.setAttribute("errorList", errorList);
-			path = "WEB-INF/jsp/create/createInput.jsp";
-		} else {
-			path = "WEB-INF/jsp/create/createConfirm.jsp";
-		}
-		request.setAttribute("emp", emp);
-		request.getRequestDispatcher(path).forward(request, response);
 		
+		RegisterEmpLogic logic = new RegisterEmpLogic();
+		boolean result = logic.execute(emp);
+		String msg = "";
+		if (result) {
+			msg = "登録しました";
+		} else {
+			msg = "登録に失敗しました";
+		}
+		request.setAttribute("msg", msg);
+		String path = "WEB-INF/jsp/create/createDone.jsp";
+		request.getRequestDispatcher(path).forward(request, response);
 	}
 
 }
