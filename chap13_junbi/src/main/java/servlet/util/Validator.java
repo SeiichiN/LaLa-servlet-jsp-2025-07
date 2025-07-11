@@ -1,5 +1,6 @@
 package servlet.util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import model.Employee;
@@ -26,6 +27,11 @@ public class Validator {
 			errorList.add("数字ではない");
 		}
 		return age;
+	}
+	
+	public int checkAge(String ageTxt) {
+		List<String> errorList = new ArrayList<>();
+		return checkAge(ageTxt, errorList);
 	}
 	
 	public void check(Employee emp, List<String> errorList) {
