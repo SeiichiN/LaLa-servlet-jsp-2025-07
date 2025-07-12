@@ -26,27 +26,27 @@ public class ConfirmServlet extends HttpServlet {
 		Validator validator = new Validator();
 		
 		String path = request.getServletPath();
+		String targetURL = null;
+		String h2_text = null;
 		switch (path) {
 		case "/createConfirm":
 			validator.checkCreate(emp, errorList);
 			if (errorList.size() > 0) {
-				request.setAttribute("targetURL", "createConfirm");
-				request.setAttribute("h2_text", "新規社員登録");
+				targetURL = "createConfirm";
+				h2_text = "新規社員登録";
 			} else {
-				request.setAttribute("targetURL", "createDone");
-				request.setAttribute("gobackURL", "createInput");
-				request.setAttribute("h2_text", "新規社員登録・確認");
+				targetURL = "createDone";
+				h2_text = "新規社員登録・確認";
 			}
 			break;
 		case "/updateConfirm":
 			validator.checkUpdate(emp, errorList);
 			if (errorList.size() > 0) {
-				request.setAttribute("targetURL", "updateInput");
-				request.setAttribute("h2_text", "社員情報編集");
+				targetURL = "updateInput";
+				h2_text = "社員情報編集";
 			} else {
-				request.setAttribute("targetURL", "updateDone");
-				request.setAttribute("gobackURL", "updateInput");
-				request.setAttribute("h2_text", "社員情報編集・確認");
+				targetURL = "updateDone";
+				h2_text = "社員情報編集・確認";
 			}
 			break;
 		}
@@ -56,6 +56,8 @@ public class ConfirmServlet extends HttpServlet {
 		} else {
 			url = "WEB-INF/jsp/confirm.jsp";
 		}
+		request.setAttribute("targetURL", targetURL);
+		request.setAttribute("h2_text", h2_text);
 		request.setAttribute("emp", emp);
 		request.getRequestDispatcher(url).forward(request, response);
 		
