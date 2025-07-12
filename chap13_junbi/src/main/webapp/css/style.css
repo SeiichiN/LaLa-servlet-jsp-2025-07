@@ -71,18 +71,20 @@ footer {
 #list td {
 	border: solid 1px #aaa;
 }
-#list th,
-#list td {
+th, 
+td {
 	padding: 5px 8px;
 }
 #list th {
-	text-align: left;
 	background-color: #b7aee5;
 }
-.no-border {
+th {
+	text-align: left;
+}
+#list .no-border {
 	border: none;
 }
-.no-bk {
+#list .no-bk {
 	background-color: transparent;
 }
 

@@ -3,13 +3,13 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
-<jsp:include page="../common/head.jsp" />
+<jsp:include page="common/head.jsp" />
 <body>
-	<jsp:include page="../common/header.jsp" />
+	<jsp:include page="common/header.jsp" />
 	
 	<div class="container">
   	<main>
-  		<h2>新規社員登録</h2>
+  		<h2>${h2_text}</h2>
   		<div class="error">
   		  <ul>
   			<c:forEach var="errorMsg" items="${errorList}">
@@ -17,12 +17,17 @@
   			</c:forEach>
   			</ul>
   		</div>
-			<form action="createConfirm" method="post">
+			<form action="${targetURL}" method="post">
 				<table>
 					<tr>
 						<th>ID</th>
-						<td><input type="text" name="id" 
-						           value="<c:out value="${emp.id}" />"></td>
+						<c:if test="${targetURL == 'createConfirm'}">
+							<td><input type="text" name="id"
+							           value="<c:out value="${emp.id}" />"></td>
+						</c:if>
+						<c:if test="${targetURL == 'updateConfirm'}">
+							<td><c:out value="${emp.id}" /></td>					
+						</c:if>
 					</tr>
 					<tr>
 						<th>名前</th>
@@ -35,13 +40,16 @@
 					             value="<c:out value="${emp.age}" />"></td>
 					</tr>
 				</table>
+				<c:if test="${targetURL == 'updateConfirm'}">
+					<input type="hidden" name="id" value="${emp.id}">
+				</c:if>
 				<a href="list"><button type="button">もどる</button></a>
 				<input type="submit" value="確認">
 			</form>
 	  </main>
-	  <jsp:include page="../common/aside.jsp" />
+	  <jsp:include page="common/aside.jsp" />
 	</div> <!-- .contaier end -->
 	
-  <jsp:include page="../common/footer.jsp" />
+  <jsp:include page="common/footer.jsp" />
 </body>
 </html>
