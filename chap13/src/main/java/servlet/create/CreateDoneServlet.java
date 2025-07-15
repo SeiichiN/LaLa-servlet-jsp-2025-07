@@ -31,7 +31,8 @@ public class CreateDoneServlet extends HttpServlet {
 			msg = "登録に失敗しました";
 		}
 		request.setAttribute("msg", msg);
-		String path = "WEB-INF/jsp/create/createDone.jsp";
+		request.setAttribute("h2_text", "新規社員登録・結果");
+		String path = "WEB-INF/jsp/done.jsp";
 		request.getRequestDispatcher(path).forward(request, response);
 	}
 

@@ -122,6 +122,41 @@ public class EmployeesDAO {
 		return empList;
 	}
 
+	public Employee findEmpById(String id) {
+		Employee employee = null;
+		
+		try {
+			Class.forName("org.h2.Driver");
+		} catch (ClassNotFoundException e) {
+			throw new IllegalStateException(
+					"JDBC読み込みエラー");
+		}
+		
+		try (Connection conn = DriverManager.getConnection(
+				JDBC_URL, DB_USER, DB_PASS)) {
+			String sql = 
+					"""
+					SELECT id, name, age FROM employees
+					WHERE id = ?
+					""";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, id);
+			ResultSet rs = pStmt.executeQuery();
+			
+			if (rs.next()) {
+				String name = rs.getString("name");
+				int age = rs.getInt("age");
+				employee = new Employee(id, name, age);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		return employee;
+	}
+
 	// true - そのIDは存在していない
 	// false - そのIDは存在している
 	public boolean isNotExistId(String id) {
@@ -167,6 +202,36 @@ public class EmployeesDAO {
 			pStmt.setString(1, emp.getId());
 			pStmt.setString(2, emp.getName());
 			pStmt.setInt(3, emp.getAge());
+			int result = pStmt.executeUpdate();
+			if (result != 1) {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	public boolean update(Employee emp) {		
+		try {
+			Class.forName("org.h2.Driver");
+		} catch (ClassNotFoundException e) {
+			throw new IllegalStateException(
+					"JDBC読み込みエラー");
+		}
+		
+		try (Connection conn = DriverManager.getConnection(
+				JDBC_URL, DB_USER, DB_PASS)) {
+			String sql = 
+					"""
+					UPDATE employees SET name = ?, age = ?
+					WHERE id = ?					
+					""";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, emp.getName());
+			pStmt.setInt(2, emp.getAge());
+			pStmt.setString(3, emp.getId());
 			int result = pStmt.executeUpdate();
 			if (result != 1) {
 				return false;

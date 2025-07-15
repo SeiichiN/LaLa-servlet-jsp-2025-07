@@ -1,8 +1,6 @@
-package servlet.create;
+package servlet.update;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -11,31 +9,29 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import model.Employee;
+import model.UpdateEmpLogic;
 import servlet.util.MakeEmpByParam;
-import servlet.util.Validator;
 
-@WebServlet("/createConfirm")
-public class CreateConfirmServlet extends HttpServlet {
+@WebServlet("/updateDone")
+public class UpdateDoneServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		MakeEmpByParam makeEmp = new MakeEmpByParam();
 		Employee emp = makeEmp.execute(request);
 		
-		Validator validator = new Validator();
-		List<String> errorList = new ArrayList<>();
-		validator.checkCreate(emp, errorList);
-		String path = "";
-		if (errorList.size() > 0) {
-			// エラーがある場合は、入力画面にもどる
-			request.setAttribute("errorList", errorList);
-			path = "WEB-INF/jsp/create/createInput.jsp";
+		UpdateEmpLogic logic = new UpdateEmpLogic();
+		boolean result = logic.execute(emp);
+		String msg = "";
+		if (result) {
+			msg = "更新しました";
 		} else {
-			path = "WEB-INF/jsp/create/createConfirm.jsp";
+			msg = "更新に失敗しました";
 		}
-		request.setAttribute("emp", emp);
+		request.setAttribute("msg", msg);
+		request.setAttribute("h2_text", "社員情報更新・結果");
+		String path = "WEB-INF/jsp/done.jsp";
 		request.getRequestDispatcher(path).forward(request, response);
-		
 	}
 
 }
