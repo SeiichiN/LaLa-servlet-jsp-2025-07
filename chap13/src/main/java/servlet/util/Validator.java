@@ -6,13 +6,14 @@ import model.Employee;
 import model.IsNotExistIdLogic;
 
 public class Validator {
+	// 名前検索でのチェック
 	public void checkName(String name, 
 			        List<String> errorList) {
 		if (name == null || name.length() == 0) {
 			errorList.add("文字が未入力です");
 		}		
 	}
-	
+	// 年齢検索用
 	public int checkAge(String ageTxt, 
 			        List<String> errorList) {
 		if (ageTxt == null || ageTxt.length() == 0) {
@@ -24,6 +25,18 @@ public class Validator {
 			age = Integer.parseInt(ageTxt);
 		} catch (NumberFormatException e) {
 			errorList.add("数字ではない");
+		}
+		return age;
+	}
+	
+	// create, update のとき用
+	// ageTxtに誤りがあれば、ゼロにする
+	public int checkAge(String ageTxt) {
+		int age = 0;
+		try {
+			age = Integer.parseInt(ageTxt);
+		} catch (NumberFormatException e) {
+			age = 0;
 		}
 		return age;
 	}
@@ -51,9 +64,18 @@ public class Validator {
 		}
 	}
 	
-	public void check(Employee emp, List<String> errorList) {
-		checkId(emp, errorList);
+	public void checkName(Employee emp, 
+			     List<String> errorList) {
 		checkName(emp.getName(), errorList);
+	}
+	
+	public void checkCreate(Employee emp, List<String> errorList) {
+		checkId(emp, errorList);
+		checkName(emp, errorList);
+		checkAge(emp, errorList);
+	}
+	public void checkUpdate(Employee emp, List<String> errorList) {
+		checkName(emp, errorList);
 		checkAge(emp, errorList);
 	}
 }
