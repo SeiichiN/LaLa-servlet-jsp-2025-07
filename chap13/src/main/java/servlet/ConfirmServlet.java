@@ -1,4 +1,4 @@
-package servlet.update;
+package servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,28 +14,41 @@ import model.Employee;
 import servlet.util.MakeEmpByParam;
 import servlet.util.Validator;
 
-@WebServlet("/updateConfirm")
-public class UpdateConfirmServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/createConfirm", "/updateConfirm"})
+public class ConfirmServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+       
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String path = request.getServletPath();
+		
 		MakeEmpByParam makeEmp = new MakeEmpByParam();
 		Employee emp = makeEmp.execute(request);
+		Validator validator = new Validator();
+		List<String> errorList = new ArrayList<>();		
 		
-		Validator validator = new Validator();		
-		List<String> errorList = new ArrayList<>();
-		validator.checkUpdate(emp, errorList);
+		switch (path) {
+		case "/createConfirm":
+			validator.checkCreate(emp, errorList);
+			if (errorList.size() == 0)
+				request.setAttribute("nextURL", "createDone");
+			break;
+		case "/updateConfirm":
+			validator.checkUpdate(emp, errorList);
+			if (errorList.size() == 0)
+				request.setAttribute("nextURL", "updateDone");
+			break;
+		}
 		
-		String path = "";
+		String url = "";
 		if (errorList.size() > 0) {
-			// エラーがある場合は、入力画面にもどる
 			request.setAttribute("errorList", errorList);
-			path = "WEB-INF/jsp/update/updateInput.jsp";
+			url = "WEB-INF/jsp/input.jsp";
 		} else {
-			path = "WEB-INF/jsp/update/updateConfirm.jsp";
+			url = "WEB-INF/jsp/confirm.jsp";
 		}
 		request.setAttribute("emp", emp);
-		request.getRequestDispatcher(path).forward(request, response);
+		request.getRequestDispatcher(url).forward(request, response);
+		
 	}
 
 }
