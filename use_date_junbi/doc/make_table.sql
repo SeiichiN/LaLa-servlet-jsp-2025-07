@@ -9,6 +9,6 @@ CREATE TABLE members (
 );
 
 INSERT INTO members (name, birthday) VALUES
-('湊 雄輔', '2022-7-17'),
-('綾部 みゆき', '2023-10-23');
+('湊 雄輔', '2002-7-17'),
+('綾部 みゆき', '2003-10-23');
 

@@ -15,6 +15,8 @@
 					<th>名前</th>
 					<th>誕生日</th>
 					<th>年齢</th>
+					<th></th>
+					<th></th>
 				</tr>
 			<c:forEach var="member" items="${memberList}">
 				<tr>
@@ -22,6 +24,18 @@
 					<td><c:out value="${member.name}" /></td>
 					<td><c:out value="${member.birthday}" /></td>
 					<td><c:out value="${member.age}" /></td>
+					<td>
+						<form action="updateInput" method="get">
+							<input type="hidden" name="id" value="${member.id}">
+							<input type="submit" value="編集">
+						</form>
+					</td>
+					<td>
+						<form action="deleteInput" method="get">
+							<input type="hidden" name="id" value="${member.id}">
+							<input type="submit" value="削除">
+						</form>
+					</td>
 				</tr>
 			</c:forEach>
 			</table>

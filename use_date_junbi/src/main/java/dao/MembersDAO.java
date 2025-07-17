@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +36,8 @@ public class MembersDAO {
 			while (rs.next()) {
 				int id = rs.getInt("id");
 				String name = rs.getString("name");
-				Date birthday = rs.getDate("birthday");
+				Date sqlBirthday = rs.getDate("birthday");
+				LocalDate birthday = sqlBirthday.toLocalDate();
 				Member member = new Member(id, name, birthday);
 				memberList.add(member);
 			}

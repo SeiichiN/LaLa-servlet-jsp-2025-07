@@ -8,29 +8,27 @@ import java.time.Period;
 public class Member implements Serializable {
 	private int id;
 	private String name;
-	private Date birthday;
-	private int age;
+	private LocalDate birthday;
 	
 	public Member() {}
 
 	public Member(String name, String birthText) {
 		this.name = name;
-		this.birthday = Date.valueOf(birthText);
-		calcAge();
+		Date sqlBirthday = Date.valueOf(birthText);
+		this.birthday = sqlBirthday.toLocalDate();
 	}
 	
-	public Member(int id, String name, Date birthday) {
+	public Member(int id, String name, LocalDate birthday) {
 		this.id = id;
 		this.name = name;
 		this.birthday = birthday;
-		calcAge();
 	}
 	
-	public void calcAge() {
+	public int getAge() {
 		// Date sqlDate = Date.valueOf(birthday);
-		LocalDate birthDate = birthday.toLocalDate();
+		// LocalDate birthDate = birthday.toLocalDate();
 		LocalDate currentDate = LocalDate.now();
-		age = Period.between(birthDate, currentDate).getYears();
+		return Period.between(birthday, currentDate).getYears();
 	}
 
 	public int getId() {
@@ -41,17 +39,13 @@ public class Member implements Serializable {
 		return name;
 	}
 
-	public Date getBirthday() {
+	public LocalDate getBirthday() {
 		return birthday;
 	}
 	
-	public int getAge() {
-		return age;
-	}
-
 	@Override
 	public String toString() {
-		return "Member [id=" + id + ", name=" + name + ", birthday=" + birthday + ", age=" + age + "]";
+		return "Member [id=" + id + ", name=" + name + ", birthday=" + birthday + "]";
 	}
 	
 }
