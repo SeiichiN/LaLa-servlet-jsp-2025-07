@@ -77,4 +77,36 @@ public class MembersDAO {
 		}
 		return true;
 	}
+
+	public Member findMemberById(int id) {
+		Member member = null;
+		try {
+			Class.forName("org.h2.Driver");
+		} catch (ClassNotFoundException e) {
+			throw new IllegalStateException(
+					"DBドライバーの読込に失敗しました");
+		}
+		
+		try (Connection conn = 
+				DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+			String sql = 
+					"""
+					SELECT id, name, birthday FROM members
+					WHERE id = ?
+					""";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setInt(1, id);
+			ResultSet rs = pStmt.executeQuery();
+			if (rs.next()) {
+				String name = rs.getString("name");
+				Date sqlBirthday = rs.getDate("birthday");
+				LocalDate birthday = sqlBirthday.toLocalDate();
+				member = new Member(id, name, birthday);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return member;
+	}
 }

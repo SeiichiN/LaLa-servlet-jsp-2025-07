@@ -8,6 +8,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import model.GetMemberByIdLogic;
+import model.Member;
+
 @WebServlet(urlPatterns = {"/createInput", "/updateInput"})
 public class InputServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -18,8 +21,11 @@ public class InputServlet extends HttpServlet {
 		case "/createInput":
 			break;
 		case "/updateInput":
-			String id = request.getParameter("id");
-			GetBeansByIdLogic logic = new GetBeans
+			String idTxt = request.getParameter("id");
+			int id = Integer.parseInt(idTxt);
+			GetMemberByIdLogic logic = new GetMemberByIdLogic();
+			Member member = logic.execute(id);
+			request.setAttribute("member", member);
 			break;
 		}
 		
