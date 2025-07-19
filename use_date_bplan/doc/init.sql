@@ -12,3 +12,9 @@ INSERT INTO members (name, birthday) VALUES
 ('湊 雄輔',     '2002-3-12'),
 ('綾部 みゆき', '2003-4-13');
 
+--
+-- auto_incrementの初期化
+--
+
+TRUNCATE TABLE members;
+ALTER TABLE members ALTER COLUMN id INT AUTO_INCREMENT(1);
