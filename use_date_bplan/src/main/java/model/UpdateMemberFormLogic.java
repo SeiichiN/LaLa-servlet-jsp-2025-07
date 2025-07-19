@@ -2,9 +2,9 @@ package model;
 
 import dao.MembersDAO;
 
-public class RegisterMemberLogic {
+public class UpdateMemberFormLogic implements MemberFormLogic {
 	public boolean execute(MemberForm memberForm) {
 		MembersDAO dao = new MembersDAO();
-		return dao.create(memberForm);
+		return dao.update(memberForm);
 	}
 }

@@ -23,6 +23,10 @@
 		</ul>
 	</c:if>
 	<form action="${nextURL}" method="post">
+		<c:if test="${nextURL == 'updateConfirm'}">
+			ID：<c:out value="${memberForm.id}" /><br>
+			<input type="hidden" name="id" value="${memberForm.id}">
+		</c:if>
 		名前：<input type="text" name="name" 
 		             value="<c:out value="${memberForm.name}" />"><br>
 		誕生日：<input type="text" name="birthday"

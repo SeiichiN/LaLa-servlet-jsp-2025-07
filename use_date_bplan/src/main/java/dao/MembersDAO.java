@@ -107,4 +107,37 @@ public class MembersDAO {
 		}
 		return true;
 	}
+
+	public boolean update(MemberForm memberForm) {
+		try {
+			Class.forName("org.h2.Driver");
+		} catch (ClassNotFoundException e) {
+			throw new IllegalStateException(
+					"JDBCドライバーが見つかりませんでした");
+		}
+		
+		try (Connection conn = 
+				DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);) {
+			String sql =
+					"""
+					UPDATE members SET name = ?, birthday = ?
+					WHERE id = ?
+					""";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, memberForm.getName());
+			String birthTxt = memberForm.getBirthday();
+			birthTxt = birthTxt.replaceAll("/", "-");
+			Date sqlDate = Date.valueOf(birthTxt);
+			pStmt.setDate(2, sqlDate);
+			pStmt.setInt(3, memberForm.getId());
+			int result = pStmt.executeUpdate();
+			if (result != 1) {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
 }

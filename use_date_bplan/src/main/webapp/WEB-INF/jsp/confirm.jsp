@@ -18,9 +18,13 @@
 </head>
 <body>
 	<h2>${h2_text}</h2>
+	<c:if test="${nextURL == 'updateDone'}">
+		ID：<c:out value="${memberForm.id}" /><br>
+	</c:if>
 	名前：<c:out value="${memberForm.name}" /><br>
 	誕生日：<c:out value="${memberForm.birthday}" /><br>
 	<form action="${nextURL}" method="post">
+		<input type="hidden" name="id" value="${memberForm.id}">
 		<input type="hidden" name="name" value="${memberForm.name}">
 		<input type="hidden" name="birthday" value="${memberForm.birthday}">
 		<input type="submit" value="${btn_text}">

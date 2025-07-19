@@ -19,8 +19,8 @@ public class ConfirmServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String path = request.getServletPath();
-		MakeMemberFormByParam makeMember = new MakeMemberFormByParam();
-		MemberForm memberForm = makeMember.execute(request);
+		MakeMemberFormByParam makeMemberForm = new MakeMemberFormByParam();
+		MemberForm memberForm = makeMemberForm.execute(request);
 		Validator validator = new Validator();
 		List<String> errorList = validator.check(memberForm);
 		String nextURL = null;

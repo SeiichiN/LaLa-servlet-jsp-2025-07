@@ -40,8 +40,8 @@ public class InputServlet extends HttpServlet {
 		int id = Integer.parseInt(idTxt);
 		GetMemberByIdLogic logic = new GetMemberByIdLogic();
 		Member member = logic.execute(id);
-		GetMemberFormByMember getMember = new GetMemberFormByMember();
-		return getMember.execute(member);
+		GetMemberFormByMember getMemberForm = new GetMemberFormByMember();
+		return getMemberForm.execute(member);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
