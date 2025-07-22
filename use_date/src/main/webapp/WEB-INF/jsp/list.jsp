@@ -26,6 +26,7 @@
 				</tr>
 			</c:forEach>
 		</table>
+		<p><a href="createInput"><button type="button">新規作成</button></a></p>
 	</main>
 </body>
 </html>
