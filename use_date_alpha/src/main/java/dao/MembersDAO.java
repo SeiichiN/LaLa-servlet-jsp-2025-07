@@ -20,7 +20,7 @@ public class MembersDAO {
 	
 	public List<Member> findAll() {
 		List<Member> memberList = new ArrayList<>();
-		
+
 		try {
 			Class.forName("org.h2.Driver");
 		} catch (ClassNotFoundException e) {
